@@ -71,7 +71,7 @@ public class DefaultEventLoopGroup extends MultithreadEventLoopGroup {
     }
 
     @Override
-    protected EventLoop newChild(Executor executor, Object... args) throws Exception {
-        return new DefaultEventLoop(this, executor);
+    protected EventLoop newChild(Executor executorService, Object... args) throws Exception {
+        return new DefaultEventLoop(this, executorService);
     }
 }

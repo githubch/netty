@@ -190,9 +190,9 @@ public class LocalChannelTest {
         final EventLoopGroup serverGroup = new DefaultEventLoopGroup(1);
         final EventLoopGroup clientGroup = new DefaultEventLoopGroup(1) {
             @Override
-            protected EventLoop newChild(Executor executor, Object... args)
+            protected EventLoop newChild(Executor executorService, Object... args)
                     throws Exception {
-                return new SingleThreadEventLoop(this, executor, true) {
+                return new SingleThreadEventLoop(this, executorService, true) {
                     @Override
                     protected void run() {
                         Runnable task = takeTask();

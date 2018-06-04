@@ -127,7 +127,7 @@ public final class EpollEventLoopGroup extends MultithreadEventLoopGroup {
     }
 
     @Override
-    protected EventLoop newChild(Executor executor, Object... args) throws Exception {
-        return new EpollEventLoop(this, executor, (Integer) args[0]);
+    protected EventLoop newChild(Executor executorService, Object... args) throws Exception {
+        return new EpollEventLoop(this, executorService, (Integer) args[0]);
     }
 }

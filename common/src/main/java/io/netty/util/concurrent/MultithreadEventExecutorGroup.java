@@ -69,7 +69,7 @@ public abstract class MultithreadEventExecutorGroup extends AbstractEventExecuto
     }
 
     private MultithreadEventExecutorGroup(int nEventExecutors,
-                                          Executor executor,
+                                          Executor executorService,
                                           boolean shutdownExecutor,
                                           Object... args) {
         if (nEventExecutors <= 0) {
@@ -77,8 +77,8 @@ public abstract class MultithreadEventExecutorGroup extends AbstractEventExecuto
                     String.format("nEventExecutors: %d (expected: > 0)", nEventExecutors));
         }
 
-        if (executor == null) {
-            executor = newDefaultExecutorService(nEventExecutors);
+        if (executorService == null) {
+            executorService = newDefaultExecutorService(nEventExecutors);
             shutdownExecutor = true;
         }
 
@@ -92,7 +92,7 @@ public abstract class MultithreadEventExecutorGroup extends AbstractEventExecuto
         for (int i = 0; i < nEventExecutors; i ++) {
             boolean success = false;
             try {
-                children[i] = newChild(executor, args);
+                children[i] = newChild(executorService, args);
                 success = true;
             } catch (Exception e) {
                 // TODO: Think about if this is a good exception type
@@ -120,7 +120,7 @@ public abstract class MultithreadEventExecutorGroup extends AbstractEventExecuto
         }
 
         final boolean shutdownExecutor0 = shutdownExecutor;
-        final Executor executor0 = executor;
+        final Executor executor0 = executorService;
         final FutureListener<Object> terminationListener = new FutureListener<Object>() {
             @Override
             public void operationComplete(Future<Object> future) throws Exception {
@@ -172,7 +172,7 @@ public abstract class MultithreadEventExecutorGroup extends AbstractEventExecuto
      * called for each thread that will serve this {@link MultithreadEventExecutorGroup}.
      *
      */
-    protected abstract EventExecutor newChild(Executor executor, Object... args) throws Exception;
+    protected abstract EventExecutor newChild(Executor executorService, Object... args) throws Exception;
 
     @Override
     public Future<?> shutdownGracefully(long quietPeriod, long timeout, TimeUnit unit) {

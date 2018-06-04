@@ -64,7 +64,7 @@ public abstract class MultithreadEventLoopGroup extends MultithreadEventExecutor
     }
 
     @Override
-    protected abstract EventLoop newChild(Executor executor, Object... args) throws Exception;
+    protected abstract EventLoop newChild(Executor executorService, Object... args) throws Exception;
 
     @Override
     public ChannelFuture register(Channel channel) {

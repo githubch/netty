@@ -109,8 +109,8 @@ public final class NioEventLoop extends SingleThreadEventLoop {
     private int cancelledKeys;
     private boolean needsToSelectAgain;
 
-    NioEventLoop(NioEventLoopGroup parent, Executor executor, SelectorProvider selectorProvider) {
-        super(parent, executor, false);
+    NioEventLoop(NioEventLoopGroup parent, Executor executorService, SelectorProvider selectorProvider) {
+        super(parent, executorService, false);
         if (selectorProvider == null) {
             throw new NullPointerException("selectorProvider");
         }
